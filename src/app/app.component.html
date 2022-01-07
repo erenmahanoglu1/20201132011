@@ -1,0 +1,27 @@
+
+<div class="b-example-divider"></div>
+
+<header class="p-3 text-white" style="background-color: cyan;">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+      </a>
+
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li><a href="" class="nav-link px-2 text-dark"><h6><em>Anasayfa</em></h6></a></li>
+        <li><a href="/odevler" class="nav-link px-2 text-dark" *ngIf="GirisYaptiMi()"><h6><em>Ödevler</em></h6></a></li>
+        <li><a href="/kayitlar" class="nav-link px-2 text-dark" *ngIf="GirisYaptiMi()"><h6><em>Admin Paneli</em></h6></a></li>
+      </ul>
+
+      
+      <div class="text-end">
+        
+        
+        <button type="button" class="btn btn-primary me-2"  routerLink="/login" *ngIf="GirisYapti()"><em>Giriş Yap</em></button>
+        <button type="button" class="btn btn-danger me-2" routerLink="/login" (click)="OturumKapat()" *ngIf="GirisYaptiMi()"><em>Çıkış Yap</em></button>
+       
+      </div>
+    </div>
+  </div>
+</header>
+<router-outlet></router-outlet>

@@ -1,0 +1,35 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-12">
+        <h5>Öğrenciler</h5>
+        <div class="table-responsive">
+          <table class="table table-hover table table-bordered">
+              <thead class="thead-dark">
+                <th>Ad Soyad</th>
+                <th>Sınıf</th>
+                <th>Şube</th>
+                <th>Ödev</th>
+                <th>Veriliş Tarihi</th>
+                <th>Teslim Tarihi</th>
+                <th>Durumu</th>
+              </thead>
+                <tbody>
+                  <tr *ngFor="let kayit of kayitlar">
+                    <td>{{kayit.adsoyad}}</td>
+                    <td>{{kayit.sinif}}</td>
+                    <td>{{kayit.sube}}</td>
+                    <td>{{kayit.odev}}</td>
+                    <td>{{kayit.verilisT | date:'dd.MM.yyyy'}}</td>
+                    <td>12.08.2020</td>
+                    <td>
+                      <span class="badge badge-pill bg-primary text-white" *ngIf="kayit.islem">Teslim Edildi</span>
+                      <span class="badge badge-pill bg-danger text-white" *ngIf="!kayit.islem">Beklemede...</span>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
+      </div>
+  </div>
+</div>
+
+

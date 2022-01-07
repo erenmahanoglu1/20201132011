@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+    <!-- Custom fonts for this template-->
+
+    
+
+    <!-- Custom styles for this template-->
+    
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">Admin Paneli</div>
+            </a>
+            <!-- Nav Item - Dashboard -->
+            
+            <!-- Nav Item - Tables -->
+                    <span><button class="btn btn-primary" routerLink="/">Anasayfaya Git</button></span>
+                    <span><button class="btn btn-primary" routerLink="/adminogrenciler">Öğrencileri Gör</button></span>
+                    <span><button class="btn btn-danger mt-5" routerLink="">Çıkış Yap</button></span>
+                    
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                                
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <!-- Content Row -->
+                    <div class="container mt-5">
+                      <div class="row">
+                        <div class="col-md-12">
+                            <h5>Öğrenciler</h5>
+                            <div class="table-responsive">
+                              <table class="table table-hover table-sm table table-bordered">
+                                  <thead class="thead-dark">
+                                    <tr>
+                                    <th>Ad Soyad</th>
+                                    <th>Sınıf</th>
+                                    <th>Şube</th>
+                                    <th>Ödev</th>
+                                    <th>Veriliş Tarihi</th>
+                                    <th>Teslim Tarihi</th>
+                                    <th>Durumu</th>
+                                    <th>İşlem</th>
+                                    <th>Düzenle</th>
+                                    <th>Sil</th>
+                                  </tr>
+                                  </thead>
+                                    <tbody>
+                                      <tr *ngFor="let kayit of kayitlar">
+                                        <td>{{kayit.adsoyad}}</td>
+                                        <td>{{kayit.sinif}}</td>
+                                        <td>{{kayit.sube}}</td>
+                                        <td>{{kayit.odev}}</td>
+                                        <td>{{kayit.verilisT | date:'dd.MM.yyyy'}}</td>
+                                        <td>12.08.2020</td>
+                                        <td>
+                                          <span class="badge badge-pill bg-primary text-white" *ngIf="kayit.islem">Teslim Edildi</span>
+                                          <span class="badge badge-pill bg-danger text-white" *ngIf="!kayit.islem">Beklemede...</span>
+                                        </td>
+                                        
+                                        <td>
+                                          <button class="btn btn-outline-primary" (click)="TamamlaIptal(kayit,true)" *ngIf="!kayit.islem">Teslim Edildi Yap</button>
+                                          <button class="btn btn-outline-danger" (click)="TamamlaIptal(kayit,false)"  *ngIf="kayit.islem">Beklemede Yap</button>
+                                        </td>
+                                        <td><button class="btn btn-outline-primary" (click)="KayitDuzenle(kayit)">Düzenle</button></td>
+                                        <td><button class="btn btn-outline-danger"(click)="KayitSil(kayit)">Sil</button></td>
+                                        
+                                      </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                          </div>
+                        
+                        <div class="col-md-4">
+                          <h5>Öğrenciler Ekle</h5>
+                          <form #kayitForm="ngForm" (ngSubmit)="Kaydet()">
+                          <div class="form-group">
+                              <label>Adı Soyadı</label>
+                              <input type="text" name="adsoyad" class="form-control" #adsoyad ngModel [(ngModel)]="secKayit.adsoyad" required>
+                          </div>
+                          <div class="form-group">
+                              <label>Sınıf</label>
+                              <input type="text" name="sinif" class="form-control" #sinif ngModel [(ngModel)]="secKayit.sinif" required>
+                          </div>
+                          <div class="form-group">
+                              <label>Şube</label>
+                              <input type="text" name="sube" class="form-control" #sube ngModel [(ngModel)]="secKayit.sube" required>
+                          </div>
+                          <div class="form-group">
+                              <label>Ödev</label>
+                              <input type="text" name="odev" class="form-control" #odev ngModel [(ngModel)]="secKayit.odev" required>
+                          </div>
+                        <div class="form-group">
+                          <label>Teslim Tarihi</label>
+                          <input type="text" name="teslimt" class="form-control" #teslimT ngModel [(ngModel)]="secKayit.teslimT" required>
+                      </div>
+                          <br>
+                          <input type="submit" value="Kaydet" class="btn btn-outline-success" [disabled]="kayitForm.invalid" required>
+                          <hr>
+                          <button class="btn btn-primary danger " (click)="Vazgec()">Vazgeç</button>
+                          <div [ngClass]="sonuc.islem ? 'alert alert-success':'alert alert-danger'" *ngIf="sonuc.mesaj?.length>0">{{sonuc.mesaj}}</div>
+                      </form>
+                      </div>
+                      </div>
+                    </div>
+                    
+                    
+                    
+                    <!-- Content Row -->
+                    <div class="row">
+                    </div>
+                    <!-- Content Row -->
+                    <div class="row">
+                        <!-- Content Column -->
+                        <div class="col-lg-6 mb-4">
+                        </div>
+                        <div class="col-lg-6 mb-4">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2021</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>
